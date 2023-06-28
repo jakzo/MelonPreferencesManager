@@ -23,13 +23,11 @@
         <AssemblyName>MelonPrefManager.Mono</AssemblyName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="UniverseLib.Analyzers" Version="1.0.4" />
-    </ItemGroup>
-    <ItemGroup>
-        <Reference Include="MelonLoader">
-            <HintPath>..\lib\MelonLoader.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
+        <PackageReference Include="LavaGang.MelonLoader" Version="0.6.1" />
+        <PackageReference Include="UniverseLib.Analyzers" Version="1.0.4">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release_Mono'">
         <PackageReference Include="UniverseLib.Mono" Version="1.5.1" />
@@ -76,9 +74,6 @@
             <HintPath>..\lib\unhollowed\UnityEngine.IMGUIModule.dll</HintPath>
             <Private>False</Private>
         </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Analyzer Include="packages\UniverseLib.Analyzers.1.0.4\analyzers\dotnet\cs\UniverseLib.Analyzers.dll" />
     </ItemGroup>
     <Target Name="DeleteFileIL2CPP" AfterTargets="Build" Condition="'$(Configuration)' == 'Release_IL2CPP'">
         <Delete Files="$(TargetDir)MelonPrefManager.IL2CPP.pdb" />

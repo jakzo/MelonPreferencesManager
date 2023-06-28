@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using MelonLoader;
 using MelonLoader.Preferences;
+using MelonLoader.Utils;
 using MelonPrefManager;
 using MelonPrefManager.UI;
 using UnityEngine;
@@ -37,8 +38,7 @@ namespace MelonPrefManager
         public static MelonPreferences_Entry<float> Startup_Delay;
         public static MelonPreferences_Entry<bool> Disable_EventSystem_Override;
 
-        public override void OnApplicationStart()
-        {
+        public override void OnInitializeMelon() {
             Instance = this;
             InitConfig();
 
@@ -47,7 +47,7 @@ namespace MelonPrefManager
                 Disable_EventSystem_Override = Disable_EventSystem_Override.Value,
                 Force_Unlock_Mouse = true,
                 Unhollowed_Modules_Folder = Path.Combine(
-                                                Path.GetDirectoryName(MelonHandler.ModsDirectory),
+                                                Path.GetDirectoryName(MelonEnvironment.ModsDirectory),
                                                 Path.Combine("MelonLoader", "Managed"))
             });
         }
