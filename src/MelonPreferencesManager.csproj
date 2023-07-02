@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net472</TargetFramework>
+        <TargetFramework>net35</TargetFramework>
         <OutputType>Library</OutputType>
         <RootNamespace>MelonPrefManager</RootNamespace>
         <LangVersion>10.0</LangVersion>
@@ -21,6 +21,14 @@
         <OutputPath>..\Release\MelonPrefManager.Mono\</OutputPath>
         <DefineConstants>MONO</DefineConstants>
         <AssemblyName>MelonPrefManager.Mono</AssemblyName>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Mono|AnyCPU'">
+      <Optimize>True</Optimize>
+      <DebugType>embedded</DebugType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_IL2CPP|AnyCPU'">
+      <Optimize>True</Optimize>
+      <DebugType>embedded</DebugType>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="LavaGang.MelonLoader" Version="0.6.1" />
@@ -80,5 +88,8 @@
     </Target>
     <Target Name="DeleteFileMono" AfterTargets="Build" Condition="'$(Configuration)' == 'Release_Mono'">
         <Delete Files="$(TargetDir)MelonPrefManager.Mono.pdb" />
+    </Target>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="copy &quot;$(TargetPath)&quot; &quot;D:\OneDrive\Games\Storm Chasers\Mods\$(TargetName)$(TargetExt)&quot;" />
     </Target>
 </Project>
