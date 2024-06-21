@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net35</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <OutputType>Library</OutputType>
         <RootNamespace>MelonPrefManager</RootNamespace>
         <LangVersion>10.0</LangVersion>
@@ -10,48 +10,30 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <AllowedReferenceRelatedFileExtensions></AllowedReferenceRelatedFileExtensions>
-        <Configurations>Release_Mono;Release_IL2CPP</Configurations>
+        <Configurations>Release_IL2CPP</Configurations>
+        <Configuration>Release_IL2CPP</Configuration>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'Release_IL2CPP' ">
         <OutputPath>..\Release\MelonPrefManager.Il2Cpp\</OutputPath>
         <DefineConstants>CPP</DefineConstants>
         <AssemblyName>MelonPrefManager.IL2CPP</AssemblyName>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release_Mono' ">
-        <OutputPath>..\Release\MelonPrefManager.Mono\</OutputPath>
-        <DefineConstants>MONO</DefineConstants>
-        <AssemblyName>MelonPrefManager.Mono</AssemblyName>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_Mono|AnyCPU'">
-      <Optimize>True</Optimize>
-      <DebugType>embedded</DebugType>
-    </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release_IL2CPP|AnyCPU'">
-      <Optimize>True</Optimize>
-      <DebugType>embedded</DebugType>
+        <Optimize>True</Optimize>
+        <DebugType>embedded</DebugType>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="LavaGang.MelonLoader" Version="0.6.1" />
         <PackageReference Include="UniverseLib.Analyzers" Version="1.0.4">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
-    <ItemGroup Condition="'$(Configuration)' == 'Release_Mono'">
-        <PackageReference Include="UniverseLib.Mono" Version="1.5.1" />
-        <Reference Include="UnityEngine">
-            <HintPath>..\lib\mono\UnityEngine.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-        <Reference Include="UnityEngine.UI">
-            <HintPath>..\lib\mono\UnityEngine.UI.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-    </ItemGroup>
     <ItemGroup Condition="'$(Configuration)' == 'Release_IL2CPP'">
-        <PackageReference Include="UniverseLib.IL2CPP.Unhollower" Version="1.5.1" />
-        <Reference Include="UnhollowerBaseLib">
-            <HintPath>..\lib\UnhollowerBaseLib.dll</HintPath>
+        <PackageReference Include="UniverseLib.IL2CPP.Interop.ML" Version="1.5.4.1" />
+        <PackageReference Include="Il2CppInterop.Common" Version="1.4.5" />
+        <PackageReference Include="Il2CppInterop.Runtime" Version="1.4.5" />
+        <Reference Include="MelonLoader">
+            <HintPath>..\lib\MelonLoader.dll</HintPath>
             <Private>False</Private>
         </Reference>
         <Reference Include="Il2Cppmscorlib">
@@ -83,13 +65,17 @@
             <Private>False</Private>
         </Reference>
     </ItemGroup>
-    <Target Name="DeleteFileIL2CPP" AfterTargets="Build" Condition="'$(Configuration)' == 'Release_IL2CPP'">
+    <Target Name="DeleteFileIL2CPP" AfterTargets="Build"
+        Condition="'$(Configuration)' == 'Release_IL2CPP'">
         <Delete Files="$(TargetDir)MelonPrefManager.IL2CPP.pdb" />
     </Target>
-    <Target Name="DeleteFileMono" AfterTargets="Build" Condition="'$(Configuration)' == 'Release_Mono'">
+    <Target Name="DeleteFileMono" AfterTargets="Build"
+        Condition="'$(Configuration)' == 'Release_Mono'">
         <Delete Files="$(TargetDir)MelonPrefManager.Mono.pdb" />
     </Target>
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="copy &quot;$(TargetPath)&quot; &quot;D:\OneDrive\Games\Storm Chasers\Mods\$(TargetName)$(TargetExt)&quot;" />
-    </Target>
+    <!-- <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec
+            Command="copy &quot;$(TargetPath)&quot; &quot;D:\OneDrive\Games\Storm
+    Chasers\Mods\$(TargetName)$(TargetExt)&quot;" />
+    </Target> -->
 </Project>
